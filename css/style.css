@@ -1,3 +1,44 @@
-#test {
-  background-color: blue;
+/* Main Layout
+*****************************************************/
+
+.row {
+  margin: 0;
+}
+
+.col-xs-2 {
+  padding: 5px;
+}
+
+/* Topbar
+*****************************************************/
+
+.topbar {
+  height: 44px;
+  background-color: yellow;
+  margin: 0 -15px 15px;
+}
+
+/* Bottom tab navigation
+*****************************************************/
+
+.botnav {
+  margin-top: 7.5px;
+}
+
+/* Cards
+*****************************************************/
+
+.cards {
+  min-height: 119px;
+  max-height: 119px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.card-front {
+  background: url('img/picture1') no-repeat;
+}
+
+.card-back {
+  background-color: rgb(133, 181, 229);
 }
