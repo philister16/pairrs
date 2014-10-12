@@ -8,16 +8,25 @@ var pairsApp = {
   },
   distributeCards : function() {
     
-    var cardRow = "";
+    var cards = [];
     
-    for(var i = 0; i < 5; i++) {
-      for(var j = 0; j < 6; i++) {
-        cardRow = cardRow + "<div class='col-xs-2'><div class='cards'><img src='img/collectionAmsterdam/backside.jpg' class='img-responsive'></div></div>";
-      }
-      cardRow = "<div class='row'>" + cardRow + "</div>";
-      $("#main-content").append(cardRow);
-      cardRow = "";
+    // fill 30 cards into array
+    for(var i = 0; i < 30; i++) {
+      cards.push("<div class='col-xs-2'><section class='cardholder'><div class='card' onclick='pairsApp.flipCard(this)'><div class='card-front'>Front</div><div class='card-back'>Back</div></div></section></div>");
     }
+    
+    // create 5 row div and insert 6 cards each
+    for(var i = 0; i < 5; i++) {
+      $("#main-content").append("<div class='row reihe-"+i+"'>");
+      for(var j = 0; j < 6; j++) {
+        $(".reihe-"+i).append(cards.shift());
+      }
+      $("#main-content").append("</div>");
+    }
+    return true;
+  },
+  flipCard : function(element) {
+    $(element).toggleClass("flipped");
   }
 }
 
