@@ -74,11 +74,11 @@ section.cardholder {
   text-align: center;
 }
 
-.card .card-front {
+.card .card-up {
   background-color: tomato;
 }
 
-.card .card-back {
+.card .card-down {
   background-color: steelblue;
   -webkit-transform: rotateY( 180deg );
      -moz-transform: rotateY( 180deg );
