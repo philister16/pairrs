@@ -88,7 +88,7 @@ var pairrs = {
     
     // fill 30 cards into array
     for(var i = 0; i < images.length; i++) {
-      cards.push("<div class='col-xs-2'><section class='cardholder'><div name='"+images[i].id+"' id='"+i+"' class='card' onclick='pairrs.game.playStroke(this)'><div class='card-down'><img src='./collections/"+this.content.name+"/"+images[i].file+"' class='img-responsive'></div><div class='card-up'><img src='./collections/"+this.content.name+"/0_backside.jpg' class='img-responsive'></div></div></section></div>");
+      cards.push("<div class='col-xs-2'><section class='cardholder'><div name='"+images[i].id+"' id='"+i+"' class='card' onclick='pairrs.game.gameOn(this)'><div class='card-down'><img src='./collections/"+this.content.name+"/"+images[i].file+"' class='img-responsive'></div><div class='card-up'><img src='./collections/"+this.content.name+"/0_backside.jpg' class='img-responsive'></div></div></section></div>");
     }
     
     // create 5 row div and insert 6 cards each
@@ -124,7 +124,7 @@ var pairrs = {
      * @param {elem} html element clicked (div.card)
      * @return {arr} array with status values to update game.status obj
      */
-    playStroke : function(elem) {
+    gameOn : function(elem) {
       switch(this.state.secondCard) {
           
         case false :
@@ -135,7 +135,8 @@ var pairrs = {
           // load the card's id and name into currentCards array
           this.state.currentCards[0].name = $(elem).attr("name");
           this.state.currentCards[0].id = $(elem).attr("id");
-          break;
+          return true;
+        break;
           
         case true :
           
@@ -152,26 +153,34 @@ var pairrs = {
             // if the names of the two flipped cards match player wins
             if(this.state.currentCards[0].name === this.state.currentCards[1].name) {
               this.state.wonPairs += 1;
-              $(this.state.currentCards[0].id).removeAttr("onclick"); // remove the click event as pair is won
-              $(this.state.currentCards[1].id).removeAttr("onclick"); // remove the click event as pair is won
+              // remove click even trigger from element so these can't be flipped back
+              var elem1 = document.getElementById(this.state.currentCards[0].id);
+              var elem2 = document.getElementById(this.state.currentCards[1].id);
+              $(elem1).removeAttr("onclick");
+              $(elem2).removeAttr("onclick");
+            // otherwise flip back the 2 non-matching cards after 3 seconds
             } else {
-            // flip back the 2 non-matching cards after 3 seconds
               var elem1 = document.getElementById(this.state.currentCards[0].id);
               var elem2 = document.getElementById(this.state.currentCards[1].id);
               setTimeout(function(elem1, elem2) {
                 pairrs.flipCard(elem1);
                 pairrs.flipCard(elem2);
-              }, 3000);
+              }, 3000, [elem1, elem2]);
             }
             this.state.currentCards = [{ name : "", id : "" },{ name : "", id : "" }]; // init the array again
             this.state.secondCard = false; // next time we flip will be the 1st card again
-            
-            // if we won all 15 pairs the game is over
-            if(this.state.wonPairs === 15) {
-              this.state.ongoing = false;
-            }
           }
-          break;
+          // if we won all 15 pairs the game is over
+          if(this.state.wonPairs === 15) {
+            return false;
+          } else {
+            return true;
+          }
+        break;
+          
+        default :
+          return false;
+        break;
       }
     }
     
