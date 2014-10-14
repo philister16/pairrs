@@ -62,14 +62,14 @@ var pairrs = {
       var counter = array.length, temp, index;
       // While there are elements in the array
       while (counter > 0) {
-          // Pick a random index
-          index = Math.floor(Math.random() * counter);
-          // Decrease counter by 1
-          counter--;
-          // And swap the last element with it
-          temp = array[counter];
-          array[counter] = array[index];
-          array[index] = temp;
+        // Pick a random index
+        index = Math.floor(Math.random() * counter);
+        // Decrease counter by 1
+        counter--;
+        // And swap the last element with it
+        temp = array[counter];
+        array[counter] = array[index];
+        array[index] = temp;
       }
       return array;
     }
@@ -158,6 +158,10 @@ var pairrs = {
               var elem2 = document.getElementById(this.state.currentCards[1].id);
               $(elem1).removeAttr("onclick");
               $(elem2).removeAttr("onclick");
+
+              // keep track of score
+              this.score.totalScore += this.score.increaseScore(this.score.scoredLastRound);
+
             // otherwise flip back the 2 non-matching cards after 3 seconds
             } else {
               var elem1 = document.getElementById(this.state.currentCards[0].id);
@@ -166,10 +170,16 @@ var pairrs = {
                 pairrs.flipCard(elem1);
                 pairrs.flipCard(elem2);
               }, 3000, [elem1, elem2]);
+
+              // keep track of score
+              this.score.totalScore += this.score.deductScore(this.score.roundsNotScored);
             }
             this.state.currentCards = [{ name : "", id : "" },{ name : "", id : "" }]; // init the array again
             this.state.secondCard = false; // next time we flip will be the 1st card again
           }
+          // display the current score
+          $(".alert-info").text("Score: " + this.score.totalScore);
+
           // if we won all 15 pairs the game is over
           if(this.state.wonPairs === 15) {
             return false;
@@ -182,8 +192,37 @@ var pairrs = {
           return false;
         break;
       }
-    }
-    
+    }, // gameOn
+
+    /**
+     * Keep track of score and increases and decreases it
+     * @type {obj}
+     */
+    score : {
+      totalScore : 0,
+      increaseScore : function(scoredLastRound) {
+        this.roundsNotScored = 0;
+        // if player did not score last round increase by 100 points
+        if(!scoredLastRound) {
+          this.scoredLastRound = true; // scored this round, so next round scoredLastRound will be true
+          return 100;
+          // otherwise if player scored last round reward 50 bonus points in addition to the 100 points
+        } else {
+          this.scoredLastRound = true;
+          return 150;
+        }
+      },
+      deductScore : function(roundsNotScored) {
+        this.scoredLastRound = false; // scored this round, so next round scoredLastRound will be true
+        // increase malus factor by 1 for every round without any winning pair
+        var malusFactor = roundsNotScored;
+        this.roundsNotScored++;
+        return malusFactor * -5;
+      },
+      // to determine if bonus points should be assigned
+      scoredLastRound : false,
+      roundsNotScored : 0
+    }, 
   },
   
   /**
