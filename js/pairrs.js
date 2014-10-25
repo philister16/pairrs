@@ -23,13 +23,13 @@ var pairrs = {
   
   /**
    * Loads the desired set of cards into the content property and return the content property
-   * @param {obj} collection object as parsed from JSON
+   * @param {obj} collection object
    * @return {obj} the content property populated with desired collection
    */
   load : function(collection) {
     return this.content = collection;
   },
-
+  
   /**
    * Empties the content property and returns the property as an empty object
    * @return {obj} empty content object
@@ -88,7 +88,7 @@ var pairrs = {
     
     // fill 30 cards into array
     for(var i = 0; i < images.length; i++) {
-      cards.push("<div class='col-xs-2'><section class='cardholder'><div name='"+images[i].id+"' id='"+i+"' class='card' onclick='pairrs.game.gameOn(this)'><div class='card-down'><img src='./collections/"+this.content.name+"/"+images[i].file+"' class='img-responsive'></div><div class='card-up'><img src='./collections/"+this.content.name+"/0_backside.jpg' class='img-responsive'></div></div></section></div>");
+      cards.push("<div class='col-xs-2'><section class='cardholder'><div name='"+images[i].id+"' id='"+i+"' class='card' onclick='pairrs.game.gameOn(this)'><div class='card-down'><img src='./collections/"+this.content.folder+"/"+images[i].file+"' class='img-responsive'></div><div class='card-up'><img src='./collections/"+this.content.folder+"/"+this.content.backside+"' class='img-responsive'></div></div></section></div>");
     }
     
     // create 5 row div and insert 6 cards each
@@ -153,7 +153,7 @@ var pairrs = {
             // if the names of the two flipped cards match player wins
             if(this.state.currentCards[0].name === this.state.currentCards[1].name) {
               this.state.wonPairs += 1;
-              // remove click even trigger from element so these can't be flipped back
+              // remove click event trigger from element so these can't be flipped back
               var elem1 = document.getElementById(this.state.currentCards[0].id);
               var elem2 = document.getElementById(this.state.currentCards[1].id);
               $(elem1).removeAttr("onclick");
@@ -226,6 +226,66 @@ var pairrs = {
   },
   
   /**
+   * Handles the menus
+   * @type {obj}
+   */
+  menu : {
+    getCoverImages : function(collections) {
+      // load all cover images into array coverImages
+      var coverImages = [];
+      for(var i = 0; i < collections.length; i++) {
+        var path = "collections/";
+        path += collections[i].folder + "/" + collections[i].cover;
+        coverImages.push(path);
+      }
+      return coverImages;
+    },
+
+    getMainMenu : function(coverImages) {
+      // define number of rows depending on number of cover images available
+      // if cover images are available
+      if(coverImages.length > 0) {
+        // each row can take a maximum of 3 images, round down and + 1 for at least 1 row
+        var rows = Math.floor(coverImages.length / 3) + 1;
+        // otherwise no coverImages available and process is stopped
+      } else {
+        return false;
+      }
+      
+      // build up html to insert into document      
+      var htmlString = "";
+      var imagePath = "";
+
+      // insert rows
+      for(var i = 0; i < rows; i++) {
+        htmlString += "<div class='row'>";
+
+        // insert 3 columsn per row
+        for(var j = 0; j < 3; j++) {          
+          htmlString += "<div class='col-xs-4'>"; // column div
+
+          // if still coverImages available insert button
+          if(coverImages.length > 0) {
+            var imagePath = coverImages.shift(); // remove first item from array
+            htmlString += "<div class='menu-btn-container'>"; // menu-btn-container div
+            htmlString += "<button class='btn btn-lg btn-primary' style='background: url("+imagePath+"); background-size: contain;'>"; // btn btn-lg btn-primary
+            htmlString += "<span class='glyphicon glyphicon-play'>"; // glyphicon glyphicon-play
+            htmlString += "</span></button></div>"; // close the tags
+          }
+          
+          htmlString += "</div>"; // close col tag
+        }
+        htmlString += "</div><!--row "+ (i + 1) +"-->";
+      }
+      return htmlString;
+    },
+
+    renderMainMenu : function(htmlString) {
+      $("#main-menu").append(htmlString);
+    }
+  },
+  
+  /**
    * Triggers CSS transition to 3D flip around individual card
    * @param {elem} clicked html element (div.card) 
    * @return {bool} true
@@ -252,31 +312,4 @@ var pairrs = {
     $(".card").removeClass("flipped");
     return true;
   }
-}
-
-
-/* LIVES DURING DEV ONLY */
-
-var dummyContent = {
-  name : "pairrsColl_CitiesOfEurope",
-  title : "Cities of Europe",
-  description : "Take a walk through the Cities of Europe. But be aware: you won't find the typical sights. You rather take a stroll through areas where tourists usually don't go. These are the fascinating cities of Europe.",
-  backside_file : "0_backside.jpg",
-  images : [
-    { id : 1, file : "1_ancient.jpg" },
-    { id : 2, file : "2_beach.jpg" },
-    { id : 3, file : "3_bike.jpg" },
-    { id : 4, file : "4_building.jpg" },
-    { id : 5, file : "5_cars.jpg" },
-    { id : 6, file : "6_colmar.jpg" },
-    { id : 7, file : "7_dawn.jpg" },
-    { id : 8, file : "8_east.jpg" },
-    { id : 9, file : "9_gracht.jpg" },
-    { id : 10, file : "10_harbor.jpg" },
-    { id : 11, file : "11_milano.jpg" },
-    { id : 12, file : "12_riga.jpg" },
-    { id : 13, file : "13_square.jpg" },
-    { id : 14, file : "14_station.jpg" },
-    { id : 15, file : "15_steine.jpg" },
-  ]
 }

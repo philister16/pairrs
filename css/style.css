@@ -1,3 +1,16 @@
+/* Globals
+*****************************************************/
+
+body {
+  background: url('../img/bg/wooden-table.png');
+}
+
+.menu-box-yellow {
+  background-color: #EFDD6F;
+  border-bottom: 5px solid #7B4A12;
+  box-shadow: 0 0 20px 0 #7B4A12;
+}
+
 /* Main Layout
 *****************************************************/
 
@@ -9,21 +22,83 @@
   padding: 5px;
 }
 
+.container-fluid {
+  height: 768px;
+}
+
+/* Main Menu
+*****************************************************/
+
+#main-menu {
+  position: absolute;
+  z-index: 2;
+  top: 44px;
+  left: 44px;
+  width: 936px;
+  height: 680px;
+  border: 5px solid #7B4A12;
+  border-radius: 30px;
+  overflow: scroll;
+  cursor: pointer;
+}
+
+.menu-btn-container {
+  height: 278.656px;
+  margin-top: 36px;
+  border-radius: 30px;
+  padding: 30px;
+  text-align: center;
+}
+
+.menu-btn-container button {
+  width: 100%;
+  height: 100%;
+  font-size: 3em;
+}
+
+
 /* Topbar
 *****************************************************/
 
 .topbar {
-  height: 44px;
-  background-color: yellow;
+  height: 95px;
   margin: 0 -15px 15px;
 }
 
-/* Bottom tab navigation
+/* Top buttons */
+.top-button {
+  margin-top: 15px;
+  width: 55px;
+  height: 55px;
+  font-size: 2.5rem;
+}
+
+/* Reward bar */
+.reward-container {
+  height: 95px;
+  width: 100%;
+  padding: 15px 5px;
+}
+
+.reward {
+  float: left;
+  height: 65px;
+  width: 50px;
+  margin: 0 2.1px;
+  padding-bottom: 15px;
+  box-sizing: border-box;
+  border-bottom: 5px solid #E49135;
+}
+
+.reward img {
+  width: 100%;
+  height: 100%;
+}
+
+/* Main Content Area
 *****************************************************/
 
-.botnav {
-  margin-top: 7.5px;
-}
+
 
 /* Cards and Flipper
 *****************************************************/
@@ -39,6 +114,9 @@ section.cardholder {
 }
 
 .card {
+  -webkit-box-shadow: 0px 3px 30px -5px rgba(102,102,102,1);
+  -moz-box-shadow: 0px 3px 30px -5px rgba(102,102,102,1);
+  box-shadow: 0px 3px 30px -5px rgba(102,102,102,1);
   width: 100%;
   height: 100%;
   position: absolute;
@@ -75,11 +153,11 @@ section.cardholder {
 }
 
 .card .card-up {
-  background-color: tomato;
+  background-color: #738F9B;
 }
 
 .card .card-down {
-  background-color: steelblue;
+  background-color: #738F9B;
   -webkit-transform: rotateY( 180deg );
      -moz-transform: rotateY( 180deg );
        -o-transform: rotateY( 180deg );
