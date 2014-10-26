@@ -118,6 +118,13 @@ var pairrs = {
       currentCards : [{ name : "", id : "" },{ name : "", id : "" }],
       wonPairs : 0
     },
+
+    startGame : function(cardDeckId) {
+      var collection = pairrsCollections[cardDeckId];
+      pairrs.load(collection);
+      pairrs.distributeCards(pairrs.shuffleCards(pairrs.content.images));
+      $("#main-menu").hide();
+    },
     
     /**
      * Executes a stroke in the game
@@ -230,24 +237,28 @@ var pairrs = {
    * @type {obj}
    */
   menu : {
-    getCoverImages : function(collections) {
-      // load all cover images into array coverImages
-      var coverImages = [];
+    getCardDecks : function(collections) {
+      // load all decks into array cardDecks
+      var cardDecks = [];
+      var cardDeck = {};
       for(var i = 0; i < collections.length; i++) {
-        var path = "collections/";
-        path += collections[i].folder + "/" + collections[i].cover;
-        coverImages.push(path);
+        cardDeck.id = collections[i].id;
+        cardDeck.name = collections[i].name;
+        cardDeck.coverPath = "collections/" + collections[i].folder + "/" + collections[i].cover;
+
+        cardDecks.push(cardDeck);
+        cardDeck = {};
       }
-      return coverImages;
+      return cardDecks;
     },
 
-    getMainMenu : function(coverImages) {
+    getMainMenu : function(cardDecks) {
       // define number of rows depending on number of cover images available
       // if cover images are available
-      if(coverImages.length > 0) {
+      if(cardDecks.length > 0) {
         // each row can take a maximum of 3 images, round down and + 1 for at least 1 row
-        var rows = Math.floor(coverImages.length / 3) + 1;
-        // otherwise no coverImages available and process is stopped
+        var rows = Math.floor(cardDecks.length / 3) + 1;
+        // otherwise no cardDecks available and process is stopped
       } else {
         return false;
       }
@@ -264,11 +275,11 @@ var pairrs = {
         for(var j = 0; j < 3; j++) {          
           htmlString += "<div class='col-xs-4'>"; // column div
 
-          // if still coverImages available insert button
-          if(coverImages.length > 0) {
-            var imagePath = coverImages.shift(); // remove first item from array
+          // if still cardDecks available insert button
+          if(cardDecks.length > 0) {
+            var cardDeck = cardDecks.shift(); // remove first item from array
             htmlString += "<div class='menu-btn-container'>"; // menu-btn-container div
-            htmlString += "<button class='btn btn-lg btn-primary' style='background: url("+imagePath+"); background-size: contain;'>"; // btn btn-lg btn-primary
+            htmlString += "<button class='btn btn-lg btn-primary' name='"+cardDeck.name+"' id='"+cardDeck.id+"' style='background: url("+cardDeck.coverPath+"); background-size: contain;'>"; // btn btn-lg btn-primary
             htmlString += "<span class='glyphicon glyphicon-play'>"; // glyphicon glyphicon-play
             htmlString += "</span></button></div>"; // close the tags
           }
@@ -282,6 +293,7 @@ var pairrs = {
 
     renderMainMenu : function(htmlString) {
       $("#main-menu").append(htmlString);
+      return true;
     }
   },
   
