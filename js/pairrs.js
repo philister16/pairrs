@@ -20,22 +20,73 @@ var pairrs = {
    * @type {obj}
    */
   content : {},
+
+  /**
+   * Holds the rewards that the player can get for right answers
+   * @type {obj}
+   */
+  rewards : {},
+
+  /**
+   * Initializes the app
+   * @return {bool} true if app loaded
+   */
+  init : function() {
+    // show the main-menu
+    pairrs.menu.showMainMenu();
+
+    // load the standard rewards
+    pairrs.load("rewardDeck", pairrsCollections.rewardDecks[0]);
+  },
   
   /**
    * Loads the desired set of cards into the content property and return the content property
    * @param {obj} collection object
    * @return {obj} the content property populated with desired collection
    */
-  load : function(collection) {
-    return this.content = collection;
+  load : function(what, deck) {
+    if(what === "cardDeck") {
+      return this.content = deck;
+    } else if (what === "rewardDeck") {
+      return this.rewards = deck;
+    } else {
+      return false;
+    }
   },
   
   /**
    * Empties the content property and returns the property as an empty object
    * @return {obj} empty content object
    */
-  unload : function() {
-    return this.content = {};
+  unload : function(what) {
+    if(what === "cardDeck") {
+      return this.content = {};
+    } else if (what === "rewardDeck") {
+      return this.rewards = {};
+    } else {
+      return false;
+    }
+  },
+
+  /**
+   * Randomly shuffles the array based on the Fisher-Yates Shuffle algorithm
+   * @param {arr} unshuffled array
+   * @return {arr} randomly shuffled array
+   */
+  shuffle : function(array) {
+    var counter = array.length, temp, index;
+    // While there are elements in the array
+    while (counter > 0) {
+      // Pick a random index
+      index = Math.floor(Math.random() * counter);
+      // Decrease counter by 1
+      counter--;
+      // And swap the last element with it
+      temp = array[counter];
+      array[counter] = array[index];
+      array[index] = temp;
+    }
+    return array;
   },
   
   /**
@@ -49,31 +100,9 @@ var pairrs = {
       imageStack.push(content[i]);
       imageStack.push(content[i]); // in the content each image occurs once, but we need it twice to create pairs
     }
-    
-    imageStack = shuffle(imageStack);
+    // shuffle the images
+    imageStack = this.shuffle(imageStack);
     return imageStack;
-    
-    /**
-     * Randomly shuffles the array based on the Fisher-Yates Shuffle algorithm
-     * @param {arr} unshuffled array
-     * @return {arr} randomly shuffled array
-     */
-    function shuffle(array) {
-      var counter = array.length, temp, index;
-      // While there are elements in the array
-      while (counter > 0) {
-        // Pick a random index
-        index = Math.floor(Math.random() * counter);
-        // Decrease counter by 1
-        counter--;
-        // And swap the last element with it
-        temp = array[counter];
-        array[counter] = array[index];
-        array[index] = temp;
-      }
-      return array;
-    }
-    
   },
   
   /**
@@ -113,16 +142,25 @@ var pairrs = {
      * @type {obj}
      */
     state : {
-      ongoing : true, // as long as not all pairs are found game is ongoing
       secondCard : false, // either we flip the 1st card or the 2nd card
       currentCards : [{ name : "", id : "" },{ name : "", id : "" }],
-      wonPairs : 0
+      wonPairs : 0,
+      scoredLastRound : false
     },
 
     startGame : function(cardDeckId) {
-      var collection = pairrsCollections[cardDeckId];
-      pairrs.load(collection);
+      $("#main-content").empty();
+
+      // load the collection clicked in the main-menu into content object holder
+      var collection = pairrsCollections.cardDecks[cardDeckId];
+      pairrs.load("cardDeck", collection);
+
+      // shuffle the cards and distribute to the playing table
       pairrs.distributeCards(pairrs.shuffleCards(pairrs.content.images));
+
+      //shuffle the rewards
+      pairrs.shuffle(pairrs.rewards.images);
+
       $("#main-menu").hide();
     },
     
@@ -132,17 +170,38 @@ var pairrs = {
      * @return {arr} array with status values to update game.status obj
      */
     gameOn : function(elem) {
+
+      /*
+       * Helper function to load the flipped card into currendCards Array
+       * @param {bool} state.secondCard to indicate first or second card to be loaded into array
+       * @param {elem} the html element clicked
+       * @return {arr} currentCards array
+       */ 
+      function loadCurrentCard(secondCard, elem) {
+        if(secondCard) {
+          var i = 1;
+        } else {
+          var i = 0;
+        }
+        pairrs.game.state.currentCards[i].name = $(elem).attr("name");
+        pairrs.game.state.currentCards[i].id = $(elem).attr("id");
+        return pairrs.game.state.currentCards;
+      } // loadcurrentCard
+
+      // switch on whether we flip the first or the second card of a specific stroke
       switch(this.state.secondCard) {
           
         case false :
           
-          pairrs.flipCard(elem); // flip the card clicked
-          this.state.secondCard = true; // next time we flip the 2nd card
+          // flip the card clicked
+          pairrs.flipCard(elem);
           
           // load the card's id and name into currentCards array
-          this.state.currentCards[0].name = $(elem).attr("name");
-          this.state.currentCards[0].id = $(elem).attr("id");
-          return true;
+          loadCurrentCard(this.state.secondCard, elem);
+
+          // next time we flip the second card
+          this.state.secondCard = true;
+
         break;
           
         case true :
@@ -151,87 +210,83 @@ var pairrs = {
           
           // if the 2nd clicked card is not the same as the one in the first stroke flip it
           if(clickedCard !== this.state.currentCards[0].id) {
+
+            // flip the card clicked
             pairrs.flipCard(elem);
             
             // load the card's id and name into currentCards array
-            this.state.currentCards[1].name = $(elem).attr("name");
-            this.state.currentCards[1].id = $(elem).attr("id");
+            loadCurrentCard(this.state.secondCard, elem);
             
+            // remove click event trigger from element so these can't be flipped back
+            // we do this at this stage because otherwise cards could be clicked during 3 seconds delay on else block
+            var elem1 = document.getElementById(this.state.currentCards[0].id);
+            var elem2 = document.getElementById(this.state.currentCards[1].id);
+            $(elem1).removeAttr("onclick");
+            $(elem2).removeAttr("onclick");
+
             // if the names of the two flipped cards match player wins
+            // cards remain turned in this case, the click event trigger was removed above
             if(this.state.currentCards[0].name === this.state.currentCards[1].name) {
-              this.state.wonPairs += 1;
-              // remove click event trigger from element so these can't be flipped back
-              var elem1 = document.getElementById(this.state.currentCards[0].id);
-              var elem2 = document.getElementById(this.state.currentCards[1].id);
-              $(elem1).removeAttr("onclick");
-              $(elem2).removeAttr("onclick");
 
               // keep track of score
-              this.score.totalScore += this.score.increaseScore(this.score.scoredLastRound);
+              this.updateScoreBoard(this.incrScore());
+
+              // we score this round so should we score again next round scoreLasteRound is true
+              this.state.scoredLastRound = true;
 
             // otherwise flip back the 2 non-matching cards after 3 seconds
             } else {
-              var elem1 = document.getElementById(this.state.currentCards[0].id);
-              var elem2 = document.getElementById(this.state.currentCards[1].id);
               setTimeout(function(elem1, elem2) {
                 pairrs.flipCard(elem1);
                 pairrs.flipCard(elem2);
-              }, 3000, [elem1, elem2]);
 
-              // keep track of score
-              this.score.totalScore += this.score.deductScore(this.score.roundsNotScored);
+                // add the onclick attr back in so the cards can be flipped again
+                $(elem1).attr("onclick", "pairrs.game.gameOn(this)");
+                $(elem2).attr("onclick", "pairrs.game.gameOn(this)");
+              }, 3000, [elem1, elem2]);
+              this.state.scoredLastRound = false; // we didn't score so next round scoreLastRound is false
             }
             this.state.currentCards = [{ name : "", id : "" },{ name : "", id : "" }]; // init the array again
             this.state.secondCard = false; // next time we flip will be the 1st card again
           }
-          // display the current score
-          $(".alert-info").text("Score: " + this.score.totalScore);
-
-          // if we won all 15 pairs the game is over
-          if(this.state.wonPairs === 15) {
-            return false;
-          } else {
-            return true;
-          }
         break;
-          
-        default :
-          return false;
-        break;
-      }
+      } // switch
     }, // gameOn
 
-    /**
-     * Keep track of score and increases and decreases it
-     * @type {obj}
-     */
-    score : {
-      totalScore : 0,
-      increaseScore : function(scoredLastRound) {
-        this.roundsNotScored = 0;
-        // if player did not score last round increase by 100 points
-        if(!scoredLastRound) {
-          this.scoredLastRound = true; // scored this round, so next round scoredLastRound will be true
-          return 100;
-          // otherwise if player scored last round reward 50 bonus points in addition to the 100 points
-        } else {
-          this.scoredLastRound = true;
-          return 150;
-        }
-      },
-      deductScore : function(roundsNotScored) {
-        this.scoredLastRound = false; // scored this round, so next round scoredLastRound will be true
-        // increase malus factor by 1 for every round without any winning pair
-        var malusFactor = roundsNotScored;
-        this.roundsNotScored++;
-        return malusFactor * -5;
-      },
-      // to determine if bonus points should be assigned
-      scoredLastRound : false,
-      roundsNotScored : 0
-    }, 
-  },
-  
+    incrScore : function() {
+
+      // increase the counter how many pairs won
+      this.state.wonPairs += 1;
+
+      // if player scores in a row he gets the special reward, thus true is returned
+      if(this.state.scoredLastRound) {
+        return true;
+        // otherwise the standard 1 point
+      } else {
+        return false;
+      }
+    }, // incrScore
+
+    updateScoreBoard : function(specialReward) {
+      var reward = "";
+      if(specialReward) {
+        reward = pairrs.rewards.candy;
+      } else {
+        reward = pairrs.rewards.images[(this.state.wonPairs - 1)].file;
+      }
+      var imgPath = "collections/" + pairrs.rewards.folder + "/" + reward;
+      var htmlString = "<img src='"+imgPath+"' >";
+      var selector = ".reward-container .reward:nth-child(" + this.state.wonPairs + ")";
+
+      setTimeout(function() {
+        $(selector).append(htmlString);
+      }, 2000, [selector, htmlString])
+
+      //$(".reward-container .reward:nth-child(" + nthChild + ")").append(htmlString);
+    } // updateScoreBoard
+
+  }, // game
+
   /**
    * Handles the menus
    * @type {obj}
@@ -279,7 +334,7 @@ var pairrs = {
           if(cardDecks.length > 0) {
             var cardDeck = cardDecks.shift(); // remove first item from array
             htmlString += "<div class='menu-btn-container'>"; // menu-btn-container div
-            htmlString += "<button class='btn btn-lg btn-primary' name='"+cardDeck.name+"' id='"+cardDeck.id+"' style='background: url("+cardDeck.coverPath+"); background-size: contain;'>"; // btn btn-lg btn-primary
+            htmlString += "<button class='btn btn-lg btn-primary' onclick='pairrs.game.startGame(" + cardDeck.id + ")' name='"+cardDeck.name+"' style='background: url("+cardDeck.coverPath+"); background-size: contain;'>"; // btn btn-lg btn-primary
             htmlString += "<span class='glyphicon glyphicon-play'>"; // glyphicon glyphicon-play
             htmlString += "</span></button></div>"; // close the tags
           }
@@ -293,6 +348,14 @@ var pairrs = {
 
     renderMainMenu : function(htmlString) {
       $("#main-menu").append(htmlString);
+      return true;
+    },
+
+    showMainMenu : function() {
+      $("#main-menu").show();
+      var cardDecks = this.getCardDecks(pairrsCollections.cardDecks);
+      var htmlString = this.getMainMenu(cardDecks);
+      this.renderMainMenu(htmlString);
       return true;
     }
   },
@@ -325,3 +388,5 @@ var pairrs = {
     return true;
   }
 }
+
+pairrs.init();
