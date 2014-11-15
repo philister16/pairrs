@@ -203,7 +203,7 @@ var pairrs = {
      */
     gameOn : function(elem) {
 
-      /*
+      /**
        * Helper function to load the flipped card into currendCards Array
        * @param {bool} state.secondCard to indicate first or second card to be loaded into array
        * @param {elem} the html element clicked
@@ -292,18 +292,27 @@ var pairrs = {
       } // switch
     }, // gameOn
 
+    /**
+     * Builds a string with the score and returns it
+     * @return {str} score message
+     */
     getScoreString : function() {
 
       // get the final score
       var score = this.getFinalScore(this.state);
 
-      // build up string to be printed to message canvas and append
+      // build up string to be printed and return it
       var messageString = "";
       messageString += "<p>" + score[1] + " x <img src='collections/" + pairrs.rewards.folder + "/0_candy.png'> + " + score[0] + " x <img src='collections/" + pairrs.rewards.folder + "/0_cover.png'></p>"
 
       return messageString;
     },
 
+    /**
+     * Shows a message and option to quit the game or continue it, also shows the current score
+     * @param {str} message to be displayed
+     * @param {arr} the 2 functions to be assigned to the 2 buttons
+     */
     gameExit : function(gameMessage, btnFunc) {
       var btnEvt = btnFunc;
       var message = gameMessage;
@@ -311,6 +320,10 @@ var pairrs = {
       pairrs.menu.showMessageBox(message, btnEvt);
     },
 
+    /**
+     * increases the score everytime a pair of cards matches, also detects if we score twice or more in a row and thus return true for a special award, otherwise returns false
+     * @return {bool} true for special awared, false
+     */
     incrScore : function() {
 
       // increase the counter how many pairs won
@@ -326,6 +339,10 @@ var pairrs = {
       }
     }, // incrScore
 
+    /**
+     * Detects if a special or normal award is granted, builds up html string for an award and appends it to the next free award container
+     * @param {bool} special awared or not return value from incrScore()
+     */
     updateScoreBoard : function(specialReward) {
       var reward = "";
       if(specialReward) {
@@ -342,6 +359,11 @@ var pairrs = {
       }, 2000, [selector, htmlString])
     }, // updateScoreBoard
 
+    /**
+     * calculates and return the current the score of normal points and special awards
+     * @param {obj} state object that contains the accumulated scores
+     * @return {arr} final scores normal points and special awards
+     */
     getFinalScore : function(state) {
       var finalScore = [];
       finalScore.push((state.wonPairs - state.wonAwards));
@@ -356,6 +378,12 @@ var pairrs = {
    * @type {obj}
    */
   menu : {
+
+    /**
+     * loads the available cardDecks from the pairrsCollections object
+     * @param {obj} pairrsCollections.cardDecks
+     * @return {arr} array of objects representing a cardDeck each with a property id, name and coverPath
+     */
     getCardDecks : function(collections) {
       // load all decks into array cardDecks
       var cardDecks = [];
@@ -371,6 +399,11 @@ var pairrs = {
       return cardDecks;
     },
 
+    /**
+     * Calculates the number of rows and columsn needed depending on number of cardDecks available and builds-up html string of main menu
+     * @param {arr} cardDecks array, return value from getCardDecks()
+     * @return {str} html string of main menu
+     */
     getMainMenu : function(cardDecks) {
       // define number of rows depending on number of cover images available
       // if cover images are available
@@ -390,7 +423,7 @@ var pairrs = {
       for(var i = 0; i < rows; i++) {
         htmlString += "<div class='row'>";
 
-        // insert 3 columsn per row
+        // insert 3 columns per row
         for(var j = 0; j < 3; j++) {          
           htmlString += "<div class='col-xs-4'>"; // column div
 
@@ -410,11 +443,20 @@ var pairrs = {
       return htmlString;
     },
 
+    /**
+     * appends the html of the main menu incl. all available cardDecks to the main-menu container
+     * @param {str} html string with rows and columns of main menu
+     * @return {bool} true if runs successfully
+     */
     renderMainMenu : function(htmlString) {
       $("#main-menu").append(htmlString);
       return true;
     },
 
+    /**
+     * empties main content area, hides all messages boxes, gets all available cardDecks, calls the build up of html string and calls the rendering method to append the string and finally returns true
+     * @return {bool} true if runs successful
+     */
     showMainMenu : function() {
       $("#main-content").empty();
       $("#message-box").hide();
@@ -480,4 +522,5 @@ var pairrs = {
   }
 }
 
+// call to initialize the app
 pairrs.init();
