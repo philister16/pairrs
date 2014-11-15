@@ -33,6 +33,7 @@ var pairrs = {
    */
   init : function() {
     $("#message-box").hide();
+    $("#info-box").hide();
 
     // show the main-menu
     pairrs.menu.showMainMenu();
@@ -473,7 +474,7 @@ var pairrs = {
      * @param {arr} array with onclick attribute values to be added to eh buttons
      */
     showMessageBox : function(message, btnEvt) {
-      //TODO: popup message box with message and click events for buttons
+      // popup message box with message and click events for buttons
       $("#message-box .message-canvas").empty();
       $("#message-box .message-canvas").append(message);
 
@@ -486,11 +487,21 @@ var pairrs = {
       $("#message-box").show();
     }, // showMessageBox
 
+    /**
+     * hides the open message box
+     */
     hideMessageBox : function() {
       $("#message-box .message-canvas").empty();
       $("#message-box button").removeAttr('onclick');
       $("#message-box").hide();
-    } // hideMessageBox
+    }, // hideMessageBox
+
+    /**
+     * shows and hides the info box
+     */
+    toggleInfo : function() {
+      $("#info-box").toggle();
+    }
   },
   
   /**
