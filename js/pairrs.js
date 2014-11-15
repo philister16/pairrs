@@ -32,6 +32,8 @@ var pairrs = {
    * @return {bool} true if app loaded
    */
   init : function() {
+    $("#message-box").hide();
+
     // show the main-menu
     pairrs.menu.showMainMenu();
 
@@ -145,11 +147,35 @@ var pairrs = {
       secondCard : false, // either we flip the 1st card or the 2nd card
       currentCards : [{ name : "", id : "" },{ name : "", id : "" }],
       wonPairs : 0,
-      scoredLastRound : false
+      wonAwards: 0,
+      scoredLastRound : false,
+      /**
+       * Initializes all values in the state object
+       * @return {obj} the state object
+       */
+      stateInit : function() {
+        this.secondCard = false;
+        this.currentCards = [{ name : "", id : "" },{ name : "", id : "" }];
+        this.wonPairs = 0;
+        this.wonAwards = 0;
+        this.scoredLastRound = false;
+        return this.state;
+      }
     },
 
+    /**
+     * Initializes all states, cleans up the view, distributes the cards and prepares the rewards and hides the menus
+     * @param {int} id of cardDeck to be used
+     * @return {bool} to indicate if game was started or not
+     */
     startGame : function(cardDeckId) {
       $("#main-content").empty();
+      pairrs.unload("cardDeck");
+
+      // empty the rewards from the rewards containers
+      $(".reward").each(function() {
+        $(this).empty();
+      });
 
       // load the collection clicked in the main-menu into content object holder
       var collection = pairrsCollections.cardDecks[cardDeckId];
@@ -161,7 +187,13 @@ var pairrs = {
       //shuffle the rewards
       pairrs.shuffle(pairrs.rewards.images);
 
+      // initialize the game state
+      this.state.stateInit();
+
       $("#main-menu").hide();
+      $("#message-box").hide();
+
+      return true;
     },
     
     /**
@@ -234,6 +266,13 @@ var pairrs = {
               // we score this round so should we score again next round scoreLasteRound is true
               this.state.scoredLastRound = true;
 
+              // if all pairs are won the game is over
+              if(this.state.wonPairs === 15) {
+                setTimeout(function() {
+                  pairrs.game.gameExit("<p>Game Over</p>", ["pairrs.menu.showMainMenu()", "pairrs.game.startGame(pairrs.content.id)"]);
+                }, 2000)
+              }
+
             // otherwise flip back the 2 non-matching cards after 3 seconds
             } else {
               setTimeout(function(elem1, elem2) {
@@ -243,7 +282,7 @@ var pairrs = {
                 // add the onclick attr back in so the cards can be flipped again
                 $(elem1).attr("onclick", "pairrs.game.gameOn(this)");
                 $(elem2).attr("onclick", "pairrs.game.gameOn(this)");
-              }, 3000, [elem1, elem2]);
+              }, 2000, [elem1, elem2]);
               this.state.scoredLastRound = false; // we didn't score so next round scoreLastRound is false
             }
             this.state.currentCards = [{ name : "", id : "" },{ name : "", id : "" }]; // init the array again
@@ -253,13 +292,33 @@ var pairrs = {
       } // switch
     }, // gameOn
 
+    getScoreString : function() {
+
+      // get the final score
+      var score = this.getFinalScore(this.state);
+
+      // build up string to be printed to message canvas and append
+      var messageString = "";
+      messageString += "<p>" + score[1] + " x <img src='collections/" + pairrs.rewards.folder + "/0_candy.png'> + " + score[0] + " x <img src='collections/" + pairrs.rewards.folder + "/0_cover.png'></p>"
+
+      return messageString;
+    },
+
+    gameExit : function(gameMessage, btnFunc) {
+      var btnEvt = btnFunc;
+      var message = gameMessage;
+      message += this.getScoreString();
+      pairrs.menu.showMessageBox(message, btnEvt);
+    },
+
     incrScore : function() {
 
       // increase the counter how many pairs won
       this.state.wonPairs += 1;
 
-      // if player scores in a row he gets the special reward, thus true is returned
+      // if player scores in a row he gets the special award, thus true is returned
       if(this.state.scoredLastRound) {
+        this.state.wonAwards += 1;
         return true;
         // otherwise the standard 1 point
       } else {
@@ -281,9 +340,14 @@ var pairrs = {
       setTimeout(function() {
         $(selector).append(htmlString);
       }, 2000, [selector, htmlString])
+    }, // updateScoreBoard
 
-      //$(".reward-container .reward:nth-child(" + nthChild + ")").append(htmlString);
-    } // updateScoreBoard
+    getFinalScore : function(state) {
+      var finalScore = [];
+      finalScore.push((state.wonPairs - state.wonAwards));
+      finalScore.push(state.wonAwards);
+      return finalScore;
+    } // getFinalScore
 
   }, // game
 
@@ -352,12 +416,39 @@ var pairrs = {
     },
 
     showMainMenu : function() {
+      $("#main-content").empty();
+      $("#message-box").hide();
       $("#main-menu").show();
       var cardDecks = this.getCardDecks(pairrsCollections.cardDecks);
       var htmlString = this.getMainMenu(cardDecks);
       this.renderMainMenu(htmlString);
       return true;
-    }
+    },
+
+    /**
+     * Pops open the message box and displays message and adds behavior to the 2 buttons
+     * @param {str} the message as text or html string
+     * @param {arr} array with onclick attribute values to be added to eh buttons
+     */
+    showMessageBox : function(message, btnEvt) {
+      //TODO: popup message box with message and click events for buttons
+      $("#message-box .message-canvas").empty();
+      $("#message-box .message-canvas").append(message);
+
+      // as long as there are button onclick attr add them to the availble buttons
+      for(var i = 0; i < btnEvt.length; i++) {
+        $("#message-box button:nth-child(" + (i+1) +")").attr('onclick', btnEvt[i]);
+      }
+
+      // display the box
+      $("#message-box").show();
+    }, // showMessageBox
+
+    hideMessageBox : function() {
+      $("#message-box .message-canvas").empty();
+      $("#message-box button").removeAttr('onclick');
+      $("#message-box").hide();
+    } // hideMessageBox
   },
   
   /**

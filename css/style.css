@@ -39,7 +39,6 @@ body {
   border: 5px solid #7B4A12;
   border-radius: 30px;
   overflow: scroll;
-  cursor: pointer;
 }
 
 .menu-btn-container {
@@ -95,10 +94,47 @@ body {
   height: 100%;
 }
 
-/* Main Content Area
+/* Message box
 *****************************************************/
 
+#message-box {
+  position: absolute;
+  top: 215px;
+  left: 272px;
+  z-index: 3;
+  width: 480px;
+  height: 338px;
+  border: 5px solid #7B4A12;
+  border-radius: 30px;
+  padding: 30px;
+  font-size: 3em;
+  color: white;
+}
 
+#message-box span {
+  font-size: 3em;
+}
+
+#message-box img {
+  width: 75px;
+  height: 75px;
+}
+
+#message-box button {
+  width: 199px;
+  margin-top: 10px;
+}
+
+.message-canvas {
+  background-color: #738F9B;
+  font-weight: 800;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px; 
+  -webkit-box-shadow: inset 0px 0px 10px -1px rgba(0,0,0,0.5);
+  -moz-box-shadow: inset 0px 0px 10px -1px rgba(0,0,0,0.5);
+  box-shadow: inset 0px 0px 10px -1px rgba(0,0,0,0.5);
+}
 
 /* Cards and Flipper
 *****************************************************/

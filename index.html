@@ -12,7 +12,7 @@
       <div class="topbar menu-box-yellow">
         <div class="row">
           <div class="col-xs-1">
-            <button type="button" class="btn btn-primary top-button"><span class="glyphicon glyphicon-stop"></span></button>
+            <button type="button" class="btn btn-primary top-button" onclick="pairrs.game.gameExit('<p>Quit Game?</p>', ['pairrs.menu.showMainMenu()', 'pairrs.menu.hideMessageBox()'])"><span class="glyphicon glyphicon-stop"></span></button>
           </div>
           <div class="col-xs-10">
             <div class="reward-container">
@@ -34,7 +34,7 @@
             </div>
           </div>
           <div class="col-xs-1">
-            <button type="button" class="btn btn-success top-button"><span class="glyphicon glyphicon-play"></span></button>
+            <button type="button" class="btn btn-primary top-button"><span class="glyphicon glyphicon-cog"></span></button>
           </div>
         </div>
       </div>
@@ -43,32 +43,17 @@
       </div>
       <div id="main-menu" class="menu-box-yellow">
         <!-- here the menu contents will be inserted dynamically -->
-        
-        <!--<div class="row">
-          <div class="col-xs-4">
-            <div class="menu-btn-container">
-              <button class="btn btn-lg btn-primary" style="background: url('collections/pairrsColl_CitiesOfEurope/0_cover.png'); background-size: contain;"><span class="glyphicon glyphicon-play"></span></button>
-            </div>
-          </div>
-          <div class="col-xs-4">
-            <div class="menu-btn-container"><button class="btn btn-lg btn-primary" style="background: url('collections/pairrsColl_CitiesOfEurope/0_cover.png'); background-size: contain;"><span class="glyphicon glyphicon-play"></span></button></div>
-          </div>
-          <div class="col-xs-4">
-            <div class="menu-btn-container">Test</div>
-          </div>
+      </div>
+      <div id="message-box" class="menu-box-yellow">
+        <!-- here game messages will be shown -->
+        <div class="message-canvas">
+          <!-- here messages will be displayed-->
         </div>
-      <div class="row">
-          <div class="col-xs-4">
-            <div class="menu-btn-container">Test</div>
-          </div>
-          <div class="col-xs-4">
-            <div class="menu-btn-container">Test</div>
-          </div>
-          <div class="col-xs-4">
-            <div class="menu-btn-container"><button type="button" class="btn btn-primary top-button"><span class="glyphicon glyphicon-play"></span></button></div>
-          </div>
-        </div>-->
-        
+        <div>
+          <!-- the onclick events will be assigned to buttons dynamically -->
+          <button class="btn btn-lg btn-danger"><span class="glyphicon glyphicon-stop"></span></button>
+          <button class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-play"></span></button>
+        </div>
       </div>
     </div><!-- container -->
     
