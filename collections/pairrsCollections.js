@@ -5,54 +5,6 @@ var pairrsCollections = {
   cardDecks : [
     {
       "id" : 0, // will be updated dynamically on load through function pairrsCollection_populateId
-      "name" : "Cities of Europe",
-      "folder" : "pairrsColl_CitiesOfEurope",
-      "cover" : "0_cover.png",
-      "backside" : "0_backside.png",
-      "images" : [
-        { "id" : 1, "file" : "1_ancient.jpg" },
-        { "id" : 2, "file" : "2_beach.jpg" },
-        { "id" : 3, "file" : "3_bike.jpg" },
-        { "id" : 4, "file" : "4_building.jpg" },
-        { "id" : 5, "file" : "5_cars.jpg" },
-        { "id" : 6, "file" : "6_colmar.jpg" },
-        { "id" : 7, "file" : "7_dawn.jpg" },
-        { "id" : 8, "file" : "8_east.jpg" },
-        { "id" : 9, "file" : "9_gracht.jpg" },
-        { "id" : 10, "file" : "10_harbor.jpg" },
-        { "id" : 11, "file" : "11_milano.jpg" },
-        { "id" : 12, "file" : "12_riga.jpg" },
-        { "id" : 13, "file" : "13_square.jpg" },
-        { "id" : 14, "file" : "14_station.jpg" },
-        { "id" : 15, "file" : "15_steine.jpg" }
-      ]
-    },
-    {
-      "id" : 0, // will be updated dynamically on load through function pairrsCollection_populateId
-      "name" : "My Images",
-      "folder" : "pairrsColl_MyImages",
-      "cover" : "0_cover.png",
-      "backside" : "0_backside.png",
-      "images" : [
-        { "id" : 1, "file" : "1_ancient.jpg" },
-        { "id" : 2, "file" : "2_beach.jpg" },
-        { "id" : 3, "file" : "3_bike.jpg" },
-        { "id" : 4, "file" : "4_building.jpg" },
-        { "id" : 5, "file" : "5_cars.jpg" },
-        { "id" : 6, "file" : "6_colmar.jpg" },
-        { "id" : 7, "file" : "7_dawn.jpg" },
-        { "id" : 8, "file" : "8_east.jpg" },
-        { "id" : 9, "file" : "9_gracht.jpg" },
-        { "id" : 10, "file" : "10_harbor.jpg" },
-        { "id" : 11, "file" : "11_milano.jpg" },
-        { "id" : 12, "file" : "12_riga.jpg" },
-        { "id" : 13, "file" : "13_square.jpg" },
-        { "id" : 14, "file" : "14_station.jpg" },
-        { "id" : 15, "file" : "15_steine.jpg" }
-      ]
-    },
-    {
-      "id" : 0, // will be updated dynamically on load through function pairrsCollection_populateId
       "name" : "All My Friends",
       "folder" : "pairrsColl_AllMyFriends",
       "cover" : "0_cover.png",
@@ -77,26 +29,74 @@ var pairrsCollections = {
     },
     {
       "id" : 0, // will be updated dynamically on load through function pairrsCollection_populateId
-      "name" : "Cars",
-      "folder" : "pairrsColl_Cars",
+      "name" : "Ancient Cars",
+      "folder" : "pairrsColl_Ancars",
       "cover" : "0_cover.png",
       "backside" : "0_backside.png",
       "images" : [
-        { "id" : 1, "file" : "1_ancient.jpg" },
-        { "id" : 2, "file" : "2_beach.jpg" },
-        { "id" : 3, "file" : "3_bike.jpg" },
-        { "id" : 4, "file" : "4_building.jpg" },
-        { "id" : 5, "file" : "5_cars.jpg" },
-        { "id" : 6, "file" : "6_colmar.jpg" },
-        { "id" : 7, "file" : "7_dawn.jpg" },
-        { "id" : 8, "file" : "8_east.jpg" },
-        { "id" : 9, "file" : "9_gracht.jpg" },
-        { "id" : 10, "file" : "10_harbor.jpg" },
-        { "id" : 11, "file" : "11_milano.jpg" },
-        { "id" : 12, "file" : "12_riga.jpg" },
-        { "id" : 13, "file" : "13_square.jpg" },
-        { "id" : 14, "file" : "14_station.jpg" },
-        { "id" : 15, "file" : "15_steine.jpg" }
+        { "id" : 1, "file" : "1_yellowcar.png" },
+        { "id" : 2, "file" : "2_blackcar.png" },
+        { "id" : 3, "file" : "3_carsinrow.png" },
+        { "id" : 4, "file" : "4_whitecar.png" },
+        { "id" : 5, "file" : "5_ferrari.png" },
+        { "id" : 6, "file" : "6_sheriffcar.png" },
+        { "id" : 7, "file" : "7_bluecar.png" },
+        { "id" : 8, "file" : "8_redcar.png" },
+        { "id" : 9, "file" : "9_smallcar.png" },
+        { "id" : 10, "file" : "10_reallyoldcar.png" },
+        { "id" : 11, "file" : "11_silvercar.png" },
+        { "id" : 12, "file" : "12_oldtimer.png" },
+        { "id" : 13, "file" : "13_greencar.png" },
+        { "id" : 14, "file" : "14_elviscar.png" },
+        { "id" : 15, "file" : "15_lambo.png" }
+      ]
+    },
+    {
+      "id" : 0, // will be updated dynamically on load through function pairrsCollection_populateId
+      "name" : "Animals",
+      "folder" : "pairrsColl_Animals",
+      "cover" : "0_cover.png",
+      "backside" : "0_backside.png",
+      "images" : [
+        { "id" : 1, "file" : "1_icebear.png" },
+        { "id" : 2, "file" : "2_tiger.png" },
+        { "id" : 3, "file" : "3_lion.png" },
+        { "id" : 4, "file" : "4_giraff.png" },
+        { "id" : 5, "file" : "5_elephant.png" },
+        { "id" : 6, "file" : "6_turtle.png" },
+        { "id" : 7, "file" : "7_flamingo.png" },
+        { "id" : 8, "file" : "8_kangaroo.png" },
+        { "id" : 9, "file" : "9_wolve.png" },
+        { "id" : 10, "file" : "10_camel.png" },
+        { "id" : 11, "file" : "11_eagle.png" },
+        { "id" : 12, "file" : "12_horse.png" },
+        { "id" : 13, "file" : "13_cow.png" },
+        { "id" : 14, "file" : "14_zebra.png" },
+        { "id" : 15, "file" : "15_leopard.png" }
+      ]
+    },
+    {
+      "id" : 0, // will be updated dynamically on load through function pairrsCollection_populateId
+      "name" : "Buildings",
+      "folder" : "pairrsColl_Buildings",
+      "cover" : "0_cover.png",
+      "backside" : "0_backside.png",
+      "images" : [
+        { "id" : 1, "file" : "1_duma.png" },
+        { "id" : 2, "file" : "2_pudong.png" },
+        { "id" : 3, "file" : "3_towerbridge.png" },
+        { "id" : 4, "file" : "4_eiffeltower.png" },
+        { "id" : 5, "file" : "5_tajmahal.png" },
+        { "id" : 6, "file" : "6_petronastowers.png" },
+        { "id" : 7, "file" : "7_forbiddencity.png" },
+        { "id" : 8, "file" : "8_brandenburgertor.png" },
+        { "id" : 9, "file" : "9_empirestate.png" },
+        { "id" : 10, "file" : "10_dubai.png" },
+        { "id" : 11, "file" : "11_chrysler.png" },
+        { "id" : 12, "file" : "12_hongkong.png" },
+        { "id" : 13, "file" : "13_goldengate.png" },
+        { "id" : 14, "file" : "14_colosseum.png" },
+        { "id" : 15, "file" : "15_rio.png" }
       ]
     }
   ],
