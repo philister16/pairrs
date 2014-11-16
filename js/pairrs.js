@@ -170,6 +170,9 @@ var pairrs = {
      * @return {bool} to indicate if game was started or not
      */
     startGame : function(cardDeckId) {
+
+      pairrs.audio.playSound(["snd-bg", 50, true]);
+
       $("#main-content").empty();
       pairrs.unload("cardDeck");
 
@@ -221,13 +224,20 @@ var pairrs = {
         return pairrs.game.state.currentCards;
       } // loadcurrentCard
 
+      function flipSwishCard(elem) {
+        // flip the card clicked
+        pairrs.flipCard(elem);
+        // play swish sound when turning the card
+        pairrs.audio.playSound(["snd-cardSwish", 100, false]);
+      } // flipSwishCard
+
       // switch on whether we flip the first or the second card of a specific stroke
       switch(this.state.secondCard) {
           
         case false :
           
-          // flip the card clicked
-          pairrs.flipCard(elem);
+          // flip card and play swish sound
+          flipSwishCard(elem);
           
           // load the card's id and name into currentCards array
           loadCurrentCard(this.state.secondCard, elem);
@@ -244,8 +254,8 @@ var pairrs = {
           // if the 2nd clicked card is not the same as the one in the first stroke flip it
           if(clickedCard !== this.state.currentCards[0].id) {
 
-            // flip the card clicked
-            pairrs.flipCard(elem);
+            // flip card and play swish sound
+            flipSwishCard(elem);
             
             // load the card's id and name into currentCards array
             loadCurrentCard(this.state.secondCard, elem);
@@ -271,6 +281,8 @@ var pairrs = {
               if(this.state.wonPairs === 15) {
                 setTimeout(function() {
                   pairrs.game.gameExit("<p>Game Over</p>", ["pairrs.menu.showMainMenu()", "pairrs.game.startGame(pairrs.content.id)"]);
+                  pairrs.audio.stopSound("snd-bg");
+                  pairrs.audio.playSound(["snd-gameOver", 100, false]);
                 }, 2000)
               }
 
@@ -279,6 +291,7 @@ var pairrs = {
               setTimeout(function(elem1, elem2) {
                 pairrs.flipCard(elem1);
                 pairrs.flipCard(elem2);
+                pairrs.audio.playSound(["snd-stackNoise", 100, false]);
 
                 // add the onclick attr back in so the cards can be flipped again
                 $(elem1).attr("onclick", "pairrs.game.gameOn(this)");
@@ -346,10 +359,13 @@ var pairrs = {
      */
     updateScoreBoard : function(specialReward) {
       var reward = "";
+      var snd = [];
       if(specialReward) {
         reward = pairrs.rewards.candy;
+        snd = ["snd-awardSound", 60, false];
       } else {
         reward = pairrs.rewards.images[(this.state.wonPairs - 1)].file;
+        snd = ["snd-scoreSound", 60, false];
       }
       var imgPath = "collections/" + pairrs.rewards.folder + "/" + reward;
       var htmlString = "<img src='"+imgPath+"' >";
@@ -357,7 +373,11 @@ var pairrs = {
 
       setTimeout(function() {
         $(selector).append(htmlString);
-      }, 2000, [selector, htmlString])
+        // play sound only if it is not the last point, then the gameOver sound will be triggered though gameExit() method
+        if(pairrs.game.state.wonPairs < 15) {
+          pairrs.audio.playSound(snd);
+        }
+      }, 2000, [selector, htmlString, snd])
     }, // updateScoreBoard
 
     /**
@@ -503,6 +523,55 @@ var pairrs = {
       $("#info-box").toggle();
     }
   },
+
+  /**
+   * Audio functions wrapper object
+   */
+   audio : {
+
+    /**
+     * Loads an audio tag by its id and returns this element
+     * @param {str} audio element's id as a string
+     * @return {elem} respective audio tag
+     */
+    loadAudio : function(audioTag) {
+      var snd = document.getElementById(audioTag);
+      return snd;
+    },
+
+    /**
+     * triggers to play a sound from the beginning
+     * @param {arr} [str audioTagId, int(1-100) volume, bool loop]
+     * @return {str} name of audio tag
+     */
+     playSound : function(options) {
+        // load the respective audio tag
+        var snd = this.loadAudio(options[0]);
+        // set the volume
+        snd.volume = (options[1] / 100);
+        // if looping is true set the sound to be looped
+        if(options[2]) {
+          snd.loop = true;
+        }
+        // start playing the sound
+        snd.play();
+        snd.currentTime = 0;
+
+        return options[0];
+     },
+
+     /**
+      * stops a sound and sets cursor/playhead back to beginning
+      * @param {str} name of audio tag id
+      */
+     stopSound : function(audioTag) {
+      // load the respective audio tag
+      var snd = this.loadAudio(audioTag);
+      snd.pause();
+      return audioTag;
+     }
+
+   }, // audio object
   
   /**
    * Triggers CSS transition to 3D flip around individual card
