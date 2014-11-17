@@ -35,6 +35,11 @@ var pairrs = {
     $("#message-box").hide();
     $("#info-box").hide();
 
+    // get the available card decks to be shown in main menu
+    var cardDecks = pairrs.menu.getCardDecks(pairrsCollections.cardDecks);
+    var htmlString = pairrs.menu.getMainMenu(cardDecks);
+    pairrs.menu.renderMainMenu(htmlString);
+
     // show the main-menu
     pairrs.menu.showMainMenu();
 
@@ -482,9 +487,11 @@ var pairrs = {
       $("#main-content").empty();
       $("#message-box").hide();
       $("#main-menu").show();
+      /*
       var cardDecks = this.getCardDecks(pairrsCollections.cardDecks);
       var htmlString = this.getMainMenu(cardDecks);
       this.renderMainMenu(htmlString);
+      */
       return true;
     },
 
