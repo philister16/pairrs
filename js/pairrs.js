@@ -27,11 +27,22 @@ var pairrs = {
    */
   rewards : {},
 
+  bindEvents: function() {
+    document.addEventListener('deviceready', this.onDeviceReady, false);
+  },
+
+  onDeviceReady: function() {
+    StatusBar.hide();
+  },
+
   /**
    * Initializes the app
    * @return {bool} true if app loaded
    */
   init : function() {
+
+    this.bindEvents();
+
     $("#message-box").hide();
     $("#info-box").hide();
 
@@ -487,11 +498,6 @@ var pairrs = {
       $("#main-content").empty();
       $("#message-box").hide();
       $("#main-menu").show();
-      /*
-      var cardDecks = this.getCardDecks(pairrsCollections.cardDecks);
-      var htmlString = this.getMainMenu(cardDecks);
-      this.renderMainMenu(htmlString);
-      */
       return true;
     },
 
