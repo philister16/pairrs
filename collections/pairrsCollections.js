@@ -74,11 +74,83 @@ var pairrsCollections = {
         { "id" : 14, "file" : "14_colosseum.png" },
         { "id" : 15, "file" : "15_rio.png" }
       ]
+    },
+    {
+      "id" : 0, // will be updated dynamically on load through function pairrsCollection_populateId
+      "name" : "Landscapes",
+      "folder" : "pairrsColl_Landscapes",
+      "cover" : "0_cover.png",
+      "backside" : "0_backside.png",
+      "images" : [
+        { "id" : 1, "file" : "1_river.png" },
+        { "id" : 2, "file" : "2_city.png" },
+        { "id" : 3, "file" : "3_sea.png" },
+        { "id" : 4, "file" : "4_arctica.png" },
+        { "id" : 5, "file" : "5_lake.png" },
+        { "id" : 6, "file" : "6_desert.png" },
+        { "id" : 7, "file" : "7_mountains.png" },
+        { "id" : 8, "file" : "8_forrest.png" },
+        { "id" : 9, "file" : "9_jungle.png" },
+        { "id" : 10, "file" : "10_beach.png" },
+        { "id" : 11, "file" : "11_lake.png" },
+        { "id" : 12, "file" : "12_glacier.png" },
+        { "id" : 13, "file" : "13_canyon.png" },
+        { "id" : 14, "file" : "14_winter.png" },
+        { "id" : 15, "file" : "15_island.png" }
+      ]
+    },
+    {
+      "id" : 0, // will be updated dynamically on load through function pairrsCollection_populateId
+      "name" : "Sports",
+      "folder" : "pairrsColl_Sports",
+      "cover" : "0_cover.png",
+      "backside" : "0_backside.png",
+      "images" : [
+        { "id" : 1, "file" : "1_soccer.png" },
+        { "id" : 2, "file" : "2_volleyball.png" },
+        { "id" : 3, "file" : "3_baseball.png" },
+        { "id" : 4, "file" : "4_baseball.png" },
+        { "id" : 5, "file" : "5_swimming.png" },
+        { "id" : 6, "file" : "6_cycling.png" },
+        { "id" : 7, "file" : "7_basketball.png" },
+        { "id" : 8, "file" : "8_tennis.png" },
+        { "id" : 9, "file" : "9_rugby.png" },
+        { "id" : 10, "file" : "10_icehockey.png" },
+        { "id" : 11, "file" : "11_fencing.png" },
+        { "id" : 12, "file" : "12_surfing.png" },
+        { "id" : 13, "file" : "13_rowing.png" },
+        { "id" : 14, "file" : "14_snowboarding.png" },
+        { "id" : 15, "file" : "15_skiing.png" }
+      ]
+    },
+    {
+      "id" : 0, // will be updated dynamically on load through function pairrsCollection_populateId
+      "name" : "Transports",
+      "folder" : "pairrsColl_Transports",
+      "cover" : "0_cover.png",
+      "backside" : "0_backside.png",
+      "images" : [
+        { "id" : 1, "file" : "1_airplane.png" },
+        { "id" : 2, "file" : "2_balloon.png" },
+        { "id" : 3, "file" : "3_subway.png" },
+        { "id" : 4, "file" : "4_bike.png" },
+        { "id" : 5, "file" : "5_jet.png" },
+        { "id" : 6, "file" : "6_londonbus.png" },
+        { "id" : 7, "file" : "7_helicopter.png" },
+        { "id" : 8, "file" : "8_rockets.png" },
+        { "id" : 9, "file" : "9_train.png" },
+        { "id" : 10, "file" : "10_ship.png" },
+        { "id" : 11, "file" : "11_propellerplane.png" },
+        { "id" : 12, "file" : "12_waterplane.png" },
+        { "id" : 13, "file" : "13_cruiseship.png" },
+        { "id" : 14, "file" : "14_sailingship.png" },
+        { "id" : 15, "file" : "15_tram.png" }
+      ]
     }
   ],
 
-// array of all available rewardDecks
-rewardDecks : [
+  // array of all available rewardDecks
+  rewardDecks : [
     {
       "id" : 0, // will be updated dynamically on load through function pairrsCollection_populateId
       "name" : "Fruits",

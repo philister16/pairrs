@@ -44,7 +44,7 @@ var pairrs = {
     this.bindEvents();
 
     $("#message-box").hide();
-    $("#info-box").hide();
+    $("#rewards-menu").hide();
 
     // get the available card decks to be shown in main menu
     var cardDecks = pairrs.menu.getCardDecks(pairrsCollections.cardDecks);
@@ -532,8 +532,8 @@ var pairrs = {
     /**
      * shows and hides the info box
      */
-    toggleInfo : function() {
-      $("#info-box").toggle();
+    toggleRewardsMenu : function() {
+      $("#rewards-menu").toggle();
     }
   },
 

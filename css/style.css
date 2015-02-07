@@ -136,7 +136,7 @@ body {
   box-shadow: inset 0px 0px 10px -1px rgba(0,0,0,0.5);
 }
 
-#info-box {
+#rewards-menu {
   position: absolute;
   top: 215px;
   left: 272px;
@@ -150,13 +150,10 @@ body {
   color: #738F9B;
 }
 
-#info-box button {
-  width: 100%;
-  margin-top: 40px;
-}
-
-#info-box button span {
-  font-size: 2em;
+.img-rwd {
+  width: 100px;
+  height: 100px;
+  margin-top: 20px;
 }
 
 /* Cards and Flipper
