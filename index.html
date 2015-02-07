@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, target-densitydpi=device-dpi">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no target-densitydpi=device-dpi">
     <title>pairrs</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -37,7 +37,7 @@
             </div>
           </div>
           <div class="col-xs-1">
-            <button type="button" class="btn btn-primary top-button" onclick="pairrs.menu.toggleRewardsMenu()"><span class="glyphicon glyphicon-info-sign"></span></button>
+            <button type="button" class="btn btn-primary top-button" onclick="pairrs.menu.toggleRewardsMenu()"><span class="glyphicon glyphicon-th-list"></span></button>
           </div>
         </div>
       </div>
@@ -61,9 +61,9 @@
       <div id="rewards-menu" class="menu-box-yellow">
       <p>Select your reward:</p>
       <div class="row">
-        <div class="col-xs-4"><button class="btn btn-lg btn-primary"><img class="img-responsive" src="collections/pairrsRew_Fruits/0_cover.png"></button></div>
-        <div class="col-xs-4"><button class="btn btn-lg btn-primary"><img class="img-responsive" src="collections/pairrsRew_Numbers/0_cover.png"></button></div>
-        <div class="col-xs-4"><img class="img-responsive" src="collections/pairrsRew_Numbers/0_cover.png"></div>
+        <div class="col-xs-4"><button class="btn btn-lg btn-primary" onclick="pairrs.menu.selectRewardsDeck(0)"><img class="img-responsive" src="collections/pairrsRew_Fruits/0_cover.png"></button></div>
+        <div class="col-xs-4"><button class="btn btn-lg btn-primary" onclick="pairrs.menu.selectRewardsDeck(1)"><img class="img-responsive" src="collections/pairrsRew_Numbers/0_cover.png"></button></div>
+        <div class="col-xs-4"><button class="btn btn-lg btn-primary" onclick="pairrs.menu.selectRewardsDeck(2)"><img class="img-responsive" src="collections/pairrsRew_Veggies/0_cover.png"></button></div>
       </div>
       <div class="row">
         <div class="col-xs-4"><img class="img-responsive" src="collections/pairrsRew_Fruits/0_cover.png"></div>
@@ -106,6 +106,9 @@
         FastClick.attach(document.body);
         }, false);
       }
+      document.addEventListener('touchmove', function(e) {
+        e.preventDefault();
+        }, false);
     </script>
   </body>
 </html>

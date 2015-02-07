@@ -198,6 +198,30 @@ var pairrsCollections = {
         { "id" : 14, "file" : "14_fourteen.png" },
         { "id" : 15, "file" : "15_fifteen.png" }
       ]
+    },
+    {
+      "id" : 0, // will be updated dynamically on load through function pairrsCollection_populateId
+      "name" : "Veggies",
+      "folder" : "pairrsRew_Veggies",
+      "cover" : "0_cover.png",
+      "candy" : "0_candy.png",
+      "images" : [
+        { "id" : 1, "file" : "1_pumpkin.png" },
+        { "id" : 2, "file" : "2_tomato.png" },
+        { "id" : 3, "file" : "3_cucumber.png" },
+        { "id" : 4, "file" : "4_artischogge.png" },
+        { "id" : 5, "file" : "5_pepper.png" },
+        { "id" : 6, "file" : "6_carot.png" },
+        { "id" : 7, "file" : "7_onion.png" },
+        { "id" : 8, "file" : "8_eggplant.png" },
+        { "id" : 9, "file" : "9_advocado.png" },
+        { "id" : 10, "file" : "10_potato.png" },
+        { "id" : 11, "file" : "11_brocoli.png" },
+        { "id" : 12, "file" : "12_radish.png" },
+        { "id" : 13, "file" : "13_salad.png" },
+        { "id" : 14, "file" : "14_corn.png" },
+        { "id" : 15, "file" : "15_aspargus.png" }
+      ]
     }
   ]
 }

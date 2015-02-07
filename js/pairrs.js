@@ -534,6 +534,18 @@ var pairrs = {
      */
     toggleRewardsMenu : function() {
       $("#rewards-menu").toggle();
+    },
+
+    loadRewardsDeck : function(deck) {
+      pairrs.load("rewardDeck", pairrsCollections.rewardDecks[deck]);
+      pairrs.shuffle(pairrs.rewards.images);
+      return true;
+    },
+
+    selectRewardsDeck : function(deck) {
+      this.loadRewardsDeck(deck);
+      this.toggleRewardsMenu();
+      return true;
     }
   },
 
