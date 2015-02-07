@@ -174,6 +174,30 @@ var pairrsCollections = {
         { "id" : 14, "file" : "14_orange.png" },
         { "id" : 15, "file" : "15_grape.png" }
       ]
+    },
+    {
+      "id" : 0, // will be updated dynamically on load through function pairrsCollection_populateId
+      "name" : "Numbers",
+      "folder" : "pairrsRew_Numbers",
+      "cover" : "0_cover.png",
+      "candy" : "0_candy.png",
+      "images" : [
+        { "id" : 1, "file" : "1_one.png" },
+        { "id" : 2, "file" : "2_two.png" },
+        { "id" : 3, "file" : "3_three.png" },
+        { "id" : 4, "file" : "4_four.png" },
+        { "id" : 5, "file" : "5_five.png" },
+        { "id" : 6, "file" : "6_six.png" },
+        { "id" : 7, "file" : "7_seven.png" },
+        { "id" : 8, "file" : "8_eight.png" },
+        { "id" : 9, "file" : "9_nine.png" },
+        { "id" : 10, "file" : "10_ten.png" },
+        { "id" : 11, "file" : "11_eleven.png" },
+        { "id" : 12, "file" : "12_twelve.png" },
+        { "id" : 13, "file" : "13_thirteen.png" },
+        { "id" : 14, "file" : "14_fourteen.png" },
+        { "id" : 15, "file" : "15_fifteen.png" }
+      ]
     }
   ]
 }
