@@ -177,26 +177,26 @@ var pairrsCollections = {
     },
     {
       "id" : 0, // will be updated dynamically on load through function pairrsCollection_populateId
-      "name" : "Numbers",
-      "folder" : "pairrsRew_Numbers",
+      "name" : "Flowers",
+      "folder" : "pairrsRew_Flowers",
       "cover" : "0_cover.png",
       "candy" : "0_candy.png",
       "images" : [
-        { "id" : 1, "file" : "1_one.png" },
-        { "id" : 2, "file" : "2_two.png" },
-        { "id" : 3, "file" : "3_three.png" },
-        { "id" : 4, "file" : "4_four.png" },
-        { "id" : 5, "file" : "5_five.png" },
-        { "id" : 6, "file" : "6_six.png" },
-        { "id" : 7, "file" : "7_seven.png" },
-        { "id" : 8, "file" : "8_eight.png" },
-        { "id" : 9, "file" : "9_nine.png" },
-        { "id" : 10, "file" : "10_ten.png" },
-        { "id" : 11, "file" : "11_eleven.png" },
-        { "id" : 12, "file" : "12_twelve.png" },
-        { "id" : 13, "file" : "13_thirteen.png" },
-        { "id" : 14, "file" : "14_fourteen.png" },
-        { "id" : 15, "file" : "15_fifteen.png" }
+        { "id" : 1, "file" : "1_flower.png" },
+        { "id" : 2, "file" : "2_flower.png" },
+        { "id" : 3, "file" : "3_flower.png" },
+        { "id" : 4, "file" : "4_flower.png" },
+        { "id" : 5, "file" : "5_flower.png" },
+        { "id" : 6, "file" : "6_flower.png" },
+        { "id" : 7, "file" : "7_flower.png" },
+        { "id" : 8, "file" : "8_flower.png" },
+        { "id" : 9, "file" : "9_flower.png" },
+        { "id" : 10, "file" : "10_flower.png" },
+        { "id" : 11, "file" : "11_flower.png" },
+        { "id" : 12, "file" : "12_flower.png" },
+        { "id" : 13, "file" : "13_flower.png" },
+        { "id" : 14, "file" : "14_flower.png" },
+        { "id" : 15, "file" : "15_flower.png" }
       ]
     },
     {
@@ -221,6 +221,78 @@ var pairrsCollections = {
         { "id" : 13, "file" : "13_salad.png" },
         { "id" : 14, "file" : "14_corn.png" },
         { "id" : 15, "file" : "15_aspargus.png" }
+      ]
+    },
+    {
+      "id" : 0, // will be updated dynamically on load through function pairrsCollection_populateId
+      "name" : "Music",
+      "folder" : "pairrsRew_Music",
+      "cover" : "0_cover.png",
+      "candy" : "0_candy.png",
+      "images" : [
+        { "id" : 1, "file" : "1_guitar.png" },
+        { "id" : 2, "file" : "2_saxophone.png" },
+        { "id" : 3, "file" : "3_trumpet.png" },
+        { "id" : 4, "file" : "4_cello.png" },
+        { "id" : 5, "file" : "5_violin.png" },
+        { "id" : 6, "file" : "6_piano.png" },
+        { "id" : 7, "file" : "7_accordeon.png" },
+        { "id" : 8, "file" : "8_bongo.png" },
+        { "id" : 9, "file" : "9_harp.png" },
+        { "id" : 10, "file" : "10_panflute.png" },
+        { "id" : 11, "file" : "11_eguitar.png" },
+        { "id" : 12, "file" : "12_bass.png" },
+        { "id" : 13, "file" : "13_shaker.png" },
+        { "id" : 14, "file" : "14_turntable.png" },
+        { "id" : 15, "file" : "15_microphone.png" }
+      ]
+    },
+    {
+      "id" : 0, // will be updated dynamically on load through function pairrsCollection_populateId
+      "name" : "Animals",
+      "folder" : "pairrsRew_Animals",
+      "cover" : "0_cover.png",
+      "candy" : "0_candy.png",
+      "images" : [
+        { "id" : 1, "file" : "1_fish.png" },
+        { "id" : 2, "file" : "2_hen.png" },
+        { "id" : 3, "file" : "3_rabbit.png" },
+        { "id" : 4, "file" : "4_sheep.png" },
+        { "id" : 5, "file" : "5_unicorn.png" },
+        { "id" : 6, "file" : "6_pig.png" },
+        { "id" : 7, "file" : "7_snail.png" },
+        { "id" : 8, "file" : "8_mouse.png" },
+        { "id" : 9, "file" : "9_butterfly.png" },
+        { "id" : 10, "file" : "10_lobster.png" },
+        { "id" : 11, "file" : "11_elephant.png" },
+        { "id" : 12, "file" : "12_cat.png" },
+        { "id" : 13, "file" : "13_lion.png" },
+        { "id" : 14, "file" : "14_octopus.png" },
+        { "id" : 15, "file" : "15_owl.png" }
+      ]
+    },
+    {
+      "id" : 0, // will be updated dynamically on load through function pairrsCollection_populateId
+      "name" : "School",
+      "folder" : "pairrsRew_School",
+      "cover" : "0_cover.png",
+      "candy" : "0_candy.png",
+      "images" : [
+        { "id" : 1, "file" : "1_spitzer.png" },
+        { "id" : 2, "file" : "2_clock.png" },
+        { "id" : 3, "file" : "3_scissors.png" },
+        { "id" : 4, "file" : "4_loupe.png" },
+        { "id" : 5, "file" : "5_camera.png" },
+        { "id" : 6, "file" : "6_triangle.png" },
+        { "id" : 7, "file" : "7_watch.png" },
+        { "id" : 8, "file" : "8_pens.png" },
+        { "id" : 9, "file" : "9_colors.png" },
+        { "id" : 10, "file" : "10_chemistry.png" },
+        { "id" : 11, "file" : "11_notebook.png" },
+        { "id" : 12, "file" : "12_circle.png" },
+        { "id" : 13, "file" : "13_tablet.png" },
+        { "id" : 14, "file" : "14_drawers.png" },
+        { "id" : 15, "file" : "15_ruler.png" }
       ]
     }
   ]
