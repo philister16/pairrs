@@ -2,10 +2,10 @@
  * pairrs Version 1.0
  * @desc pairrs is a simple memory game. The player has to find 15 pairs out of a total of
  *    30 randomly mixed and face down cards. Per round the player may turn 2 cards each, if these
- *    match as pair the player wins points, if they don't match points are deducted. The goal is to
+ *    match as pair the player gets a reward. If the player finds 2 or more consecutive matches he gets a special reward. The goal is to
  *    uncover all pairs as fast as possible and with as few rounds as possible.
  * @author phil@rhinerock.com (Philipp S. Nueesch)
- * @copyright 2014, Philipp S. Nueesch. All rights reserved.
+ * @copyright 2015, Philipp S. Nueesch. All rights reserved.
  */
 
 /**
@@ -27,10 +27,15 @@ var pairrs = {
    */
   rewards : {},
 
+  /**
+   * Listens for the initial device ready event
+   */
   bindEvents: function() {
     document.addEventListener('deviceready', this.onDeviceReady, false);
   },
-
+  /**
+   * Executes when the device ready event has fired
+   */
   onDeviceReady: function() {
     StatusBar.hide();
   },
@@ -536,12 +541,22 @@ var pairrs = {
       $("#rewards-menu").toggle();
     },
 
+    /**
+     * Loads and shuffles a new reward deck from the pairrsCollections.js object
+     * @param {obj} rewardDeck (from pairrsCollections.js)
+     * @return {bool} true if load successful
+     */
     loadRewardsDeck : function(deck) {
       pairrs.load("rewardDeck", pairrsCollections.rewardDecks[deck]);
       pairrs.shuffle(pairrs.rewards.images);
       return true;
     },
 
+    /**
+     * Calls the method to load a rewardDeck and toggles the menu for the selection of the same
+     * @param {obj} rewardDeck (from pairrsCollections.js)
+     * @return {bool} true if selection successful
+     */
     selectRewardsDeck : function(deck) {
       this.loadRewardsDeck(deck);
       this.toggleRewardsMenu();
